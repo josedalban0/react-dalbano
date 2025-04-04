@@ -1,36 +1,48 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import products from "../data/products.js";
+import { useParams } from "react-router-dom";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebaseConfig.js";
 
-const ItemListContainer = () => {
-  const { category } = useParams();
-  const [filteredProducts, setFilteredProducts] = useState([]);
+function ItemListContainer() {
+  const { categoria } = useParams();
+  const [productos, setProductos] = useState([]);
 
   useEffect(() => {
-    if (category) {
-      setFilteredProducts(products.filter((p) => p.category === category));
-    } else {
-      setFilteredProducts(products);
-    }
-  }, [category]);
+    const obtenerProductos = async () => {
+      try {
+        let q = collection(db, "productos");
+        if (categoria) {
+          q = query(q, where("categoria", "==", categoria));
+        }
+        const querySnapshot = await getDocs(q);
+        const productosArray = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProductos(productosArray);
+      } catch (error) {
+        console.error("Error obteniendo productos:", error);
+      }
+    };
+
+    obtenerProductos();
+  }, [categoria]);
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold text-center">Productos</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-        {filteredProducts.map((product) => (
-          <div key={product.id} className="border p-4 rounded-lg shadow-lg">
-            <img src={product.image} alt={product.name} className="w-full h-40 object-cover" />
-            <h3 className="text-xl font-semibold mt-2">{product.name}</h3>
-            <p className="text-gray-600">{product.description}</p>
-            <p className="text-green-600 font-bold">${product.price}</p>
-            <Link to={`/producto/${product.id}`} className="bg-blue-500 text-white px-3 py-1 mt-2 inline-block rounded">
-              Ver Detalle
-            </Link>
-          </div>
+    <div>
+      <h1>Productos {categoria && `de ${categoria}`}</h1>
+      <ul>
+        {productos.map((producto) => (
+          <li key={producto.id}>
+            <h2>{producto.nombre}</h2>
+            <p>Precio: ${producto.precio}</p>
+            <p>{producto.descripcion}</p>
+            <img src={producto.imagen} alt={producto.nombre} width="200" />
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
-};
+}
+
 export default ItemListContainer;

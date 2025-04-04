@@ -1,16 +1,39 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import products from "../data/products.js";
+import { useCart } from "../context/CartContext";
+import ItemCount from "./ItemCount";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 const ItemDetailContainer = () => {
   const { id } = useParams();
+  const { addToCart } = useCart();
   const [product, setProduct] = useState(null);
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
-    setProduct(products.find((p) => p.id === parseInt(id)));
+    const fetchProduct = async () => {
+      const db = getFirestore();
+      const productRef = doc(db, "productos", id); // Asegurate de que la colección se llama "productos"
+      const productSnap = await getDoc(productRef);
+
+      if (productSnap.exists()) {
+        setProduct({ id: productSnap.id, ...productSnap.data() });
+      } else {
+        console.error("El producto no existe");
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
+  console.log("Renderizando ItemDetailContainer", product);
+
   if (!product) return <p className="text-center mt-5">Cargando...</p>;
+
+  const handleAddToCart = (quantity) => {
+    addToCart(product, quantity);
+    setAdded(true);
+  };
 
   return (
     <div className="container mx-auto p-4 flex flex-col items-center">
@@ -18,8 +41,14 @@ const ItemDetailContainer = () => {
       <h2 className="text-3xl font-bold mt-4">{product.name}</h2>
       <p className="text-gray-600">{product.description}</p>
       <p className="text-green-600 font-bold text-xl">${product.price}</p>
-      <button className="bg-green-500 text-white px-4 py-2 rounded mt-3">Agregar al carrito</button>
+
+      {!added ? (
+        <ItemCount stock={10} initial={1} onAdd={handleAddToCart} />
+      ) : (
+        <p className="text-green-600 mt-2">¡Agregado al carrito!</p>
+      )}
     </div>
   );
 };
+
 export default ItemDetailContainer;

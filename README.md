@@ -1,12 +1,51 @@
-# React + Vite
+# 🛒 Proyecto Final - E-commerce en React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una aplicación web de tipo e-commerce desarrollada como entrega final del curso de React. Se trata de una Single Page Application (SPA) que permite explorar productos, ver sus detalles y simular una compra a través de un formulario de checkout.
 
-Currently, two official plugins are available:
+## Funcionalidades Implementadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Listado dinámico de productos desde Firestore
+- Vista detallada por producto
+- Navegación por categorías
+- Carrito de compras con conteo de unidades
+- Checkout con formulario y registro de orden en Firebase
+- Estilos responsivos con TailwindCSS
+- Renderizado condicional (carrito vacío, sin stock, carga de datos)
 
-## Expanding the ESLint configuration
+## Tecnologías Utilizadas
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React (Vite)
+- React Router DOM
+- Context API para el carrito
+- Firebase / Firestore como base de datos
+- TailwindCSS para estilos
+- Lucide React para iconografía
+
+## Estructura de Archivos
+
+/src  
+├── components  
+│   ├── Cart.jsx  
+│   ├── CartItem.jsx  
+│   ├── CartWidget.jsx  
+│   ├── CheckoutForm.jsx  
+│   ├── Item.jsx  
+│   ├── ItemCount.jsx  
+│   ├── ItemDetail.jsx  
+│   ├── ItemDetailContainer.jsx  
+│   ├── ItemList.jsx  
+│   ├── ItemListContainer.jsx  
+│   └── NavBar.jsx  
+├── context  
+│   └── CartContext.jsx  
+├── firebase  
+│   └── config.js  
+├── App.jsx  
+└── main.jsx  
+
+## Firebase Config
+
+Se utilizó Firebase Firestore para:
+
+- Almacenar los productos (colección: `productos`)
+- Registrar las órdenes de compra (colección: `ordenes`)
