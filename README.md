@@ -1,51 +1,47 @@
-# 🛒 Proyecto Final - E-commerce en React
+# 🛒 DALBANO STORE - Proyecto Final de React
 
-Este proyecto es una aplicación web de tipo e-commerce desarrollada como entrega final del curso de React. Se trata de una Single Page Application (SPA) que permite explorar productos, ver sus detalles y simular una compra a través de un formulario de checkout.
+Este proyecto es una tienda e-commerce desarrollada con **React + Vite**, utilizando **Firebase Firestore** como base de datos. Forma parte de la entrega final del curso de React en Coderhouse.
 
-## Funcionalidades Implementadas
+---
 
-- Listado dinámico de productos desde Firestore
-- Vista detallada por producto
-- Navegación por categorías
-- Carrito de compras con conteo de unidades
-- Checkout con formulario y registro de orden en Firebase
-- Estilos responsivos con TailwindCSS
-- Renderizado condicional (carrito vacío, sin stock, carga de datos)
+## 🚀 Tecnologías utilizadas
 
-## Tecnologías Utilizadas
+- **React** (Vite)
+- **React Router DOM**
+- **Firebase / Firestore**
+- **TailwindCSS**
+- **Context API**
+- **JavaScript ES6**
 
-- React (Vite)
-- React Router DOM
-- Context API para el carrito
-- Firebase / Firestore como base de datos
-- TailwindCSS para estilos
-- Lucide React para iconografía
+---
 
-## Estructura de Archivos
+## 🧩 Funcionalidades
 
-/src  
-├── components  
-│   ├── Cart.jsx  
-│   ├── CartItem.jsx  
-│   ├── CartWidget.jsx  
-│   ├── CheckoutForm.jsx  
-│   ├── Item.jsx  
-│   ├── ItemCount.jsx  
-│   ├── ItemDetail.jsx  
-│   ├── ItemDetailContainer.jsx  
-│   ├── ItemList.jsx  
-│   ├── ItemListContainer.jsx  
-│   └── NavBar.jsx  
-├── context  
-│   └── CartContext.jsx  
-├── firebase  
-│   └── config.js  
-├── App.jsx  
-└── main.jsx  
+### 🧭 Navegación SPA
+- Navegación entre secciones sin recarga de página.
+- Filtro dinámico por categorías.
+- Vista detallada de productos.
 
-## Firebase Config
+### 🛍️ Carrito de compras
+- Agregado de productos al carrito.
+- Contador de unidades con validaciones de stock.
+- Cálculo de totales, subtotales y cantidad de ítems.
+- Eliminación de productos individuales o vaciar carrito.
 
-Se utilizó Firebase Firestore para:
+### 🔥 Firebase
+- Obtención dinámica del listado de productos desde **Firestore**.
+- Registro de órdenes al confirmar una compra.
+- Visualización del ID de orden generada.
 
-- Almacenar los productos (colección: `productos`)
-- Registrar las órdenes de compra (colección: `ordenes`)
+### 🎯 Renderizado condicional
+- Mensajes de carga.
+- Indicaciones de stock agotado.
+- Mensaje de "carrito vacío".
+
+---
+
+## 🛠 Instalación local
+
+1. Cloná este repositorio:
+```bash
+git clone https://github.com/josedalban0/react-dalbano.git
