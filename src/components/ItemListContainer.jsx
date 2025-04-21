@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebaseConfig.js";
 
@@ -29,15 +29,30 @@ function ItemListContainer() {
   }, [categoria]);
 
   return (
-    <div>
-      <h1>Productos {categoria && `de ${categoria}`}</h1>
-      <ul>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">
+        Productos {categoria && `de ${categoria}`}
+      </h1>
+      <ul className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {productos.map((producto) => (
-          <li key={producto.id}>
-            <h2>{producto.nombre}</h2>
+          <li
+            key={producto.id}
+            className="border p-4 rounded shadow hover:shadow-lg transition"
+          >
+            <h2 className="text-lg font-semibold">{producto.nombre}</h2>
             <p>Precio: ${producto.precio}</p>
-            <p>{producto.descripcion}</p>
-            <img src={producto.imagen} alt={producto.nombre} width="200" />
+            <img
+              src={producto.imagen}
+              alt={producto.nombre}
+              width="200"
+              className="my-2"
+            />
+            <Link
+              to={`/producto/${producto.id}`}
+              className="inline-block mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Ver Detalle
+            </Link>
           </li>
         ))}
       </ul>

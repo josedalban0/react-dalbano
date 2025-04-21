@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
-import { useCart } from "../context/CartContext";
 
-const CartWidget = () => {
-  const { cart } = useCart();
-
-  const totalItems = cart.reduce((acc, item) => acc + item.cantidad, 0);
-
+const CartWidget = ({ totalItems }) => {
   return (
     <Link to="/cart" className="relative flex items-center gap-1">
       <ShoppingCart className="w-6 h-6" />
